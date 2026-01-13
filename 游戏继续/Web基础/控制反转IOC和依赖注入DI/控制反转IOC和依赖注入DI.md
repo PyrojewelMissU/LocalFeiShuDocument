@@ -134,7 +134,7 @@ Service中调用Dao，也是类似的问题。这种呢，我们就称之为层�
 
 那最终我们的目标呢，就是做到层与层之间，尽可能的降低耦合，甚至解除耦合。
 
-![](images/image-5.png)
+![](images/image-4.png)
 
 ## 2.解耦思路
 
@@ -181,7 +181,7 @@ public class UserController {
 
 **3). 应用程序中用到这个对象，就直接从容器中获取**
 
-![](images/image-4.png)
+![](images/image-5.png)
 
 那问题来了，我们如何将对象交给容器管理呢？ 程序运行时，容器如何为程序提供依赖的对象呢？&#x20;
 
@@ -400,6 +400,14 @@ public class UserController {
 在之前的案例中，要把某个对象交给IOC容器管理，需要在类上添加一个注解：**`@Component`**
 
 而Spring框架为了更好的标识web应用程序开发当中，bean对象到底归属于哪一层，又提供了@Component的衍生注解：
+
+| 注解            | 作用                        | 放在哪        | 说明                                       |
+| --------------- | --------------------------- | ------------- | ------------------------------------------ |
+| @Component      | 声明bean的基础注解          | 任意层        | 不属于以下三类时，用此注解                 |
+| @Controller     | 控制层组件                  | Controller 类 | 返回视图（MVC）常见                        |
+| @RestController | @Controller + @ResponseBody | Controller 类 | 返回 JSON（前后端分离）更常用              |
+| @Service        | 业务层组件                  | Service 类    | 语义化：表示“业务逻辑”                     |
+| @Repository     | DAO 层组件                  | Dao/Mapper 类 | MyBatis 场景下常由 Mapper 托管，确实用得少 |
 
 那么此时，我们就可以使用 `@Service` 注解声明Service层的bean。 使用 `@Repository` 注解声明Dao层的bean。 代码实现如下：
 
